@@ -1,74 +1,79 @@
 #include <pcap.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void packet_handler(u_char *args, const struct pcap_pkthdr *header, const u_char *packet) {
+    printf("Captured a packet with length of [%d]\n", header->len);
+}
 
 int main() {
-    printf("Hello\n");
-    
     pcap_if_t *alldevs;
-    pcap_if_t *d;
     char errbuf[PCAP_ERRBUF_SIZE];
 
-    // Ambil list adapter
+    // Cari semua device jaringan
     if (pcap_findalldevs(&alldevs, errbuf) == -1) {
-        fprintf(stderr, "Error in pcap_findalldevs: %s\n", errbuf);
+        fprintf(stderr, "Error finding devices: %s\n", errbuf);
         return 1;
     }
 
+    if (alldevs == NULL) {
+        printf("No interfaces found! Make sure Npcap is installed.\n");
+        return 1;
+    }
+
+    printf("Available interfaces:\n");
     int i = 0;
-    for (d = alldevs; d != NULL; d = d->next) {
-        printf("%d. %s", ++i, d->name);
-        if (d->description) {
-            printf(" (%s)\n", d->description);
-        } else {
-            printf(" (No description available)\n");
+    for (pcap_if_t *d = alldevs; d != NULL; d = d->next) {
+        printf("%d. %s", i++, d->name);
+        if (d->description)
+            printf(" (%s)", d->description);
+        printf("\n");
+    }
+
+    int iface_num;
+    printf("Enter the interface number to sniff: ");
+    if (scanf("%d", &iface_num) != 1) {
+        fprintf(stderr, "Invalid input.\n");
+        pcap_freealldevs(alldevs);
+        return 1;
+    }
+
+    // Validasi input
+    pcap_if_t *device = alldevs;
+    for (int j = 0; j < iface_num; j++) {
+        if (device->next == NULL) {
+            fprintf(stderr, "Interface number out of range.\n");
+            pcap_freealldevs(alldevs);
+            return 1;
+        }
+        device = device->next;
+    }
+
+    // Buka interface
+    pcap_t *handle = pcap_open_live(device->name, 65536, 1, 1000, errbuf);
+    if (handle == NULL) {
+        fprintf(stderr, "Couldn't open device %s: %s\n", device->name, errbuf);
+        pcap_freealldevs(alldevs);
+        return 1;
+    }
+
+    printf("Opened interface %s for sniffing...\n", device->name);
+
+    pcap_freealldevs(alldevs);
+
+    // Tangkap paket selama 10 detik
+    time_t start_time = time(NULL);
+    while (time(NULL) - start_time < 10) {
+        int res = pcap_dispatch(handle, 1, packet_handler, NULL);
+        if (res < 0) {
+            fprintf(stderr, "Error capturing packets: %s\n", pcap_geterr(handle));
+            break;
         }
     }
 
-    if (i == 0) {
-        printf("\nNo interfaces found! Make sure Npcap is installed.\n");
-        return -1;
-    }
-
-    int dev_num;
-    printf("Enter the interface number (1-%d): ", i);
-    scanf("%d", &dev_num);
-
-    if (dev_num < 1 || dev_num > i) {
-        printf("Interface number out of range.\n");
-        pcap_freealldevs(alldevs);
-        return -1;
-    }
-
-    // Pilih device
-    for (d = alldevs, i = 1; i < dev_num; d = d->next, i++);
-
-    // Buka device untuk sniffing
-    pcap_t *handle = pcap_open_live(d->name, 65536, 1, 1000, errbuf);
-    if (handle == NULL) {
-        fprintf(stderr, "\nUnable to open the adapter. %s is not supported by Npcap\n", d->name);
-        pcap_freealldevs(alldevs);
-        return -1;
-    }
-
-    printf("Listening on %s...\n", d->description);
-
-    // Tangkap 1 paket
-    struct pcap_pkthdr *header;
-    const u_char *pkt_data;
-
-    int res = pcap_next_ex(handle, &header, &pkt_data);
-    if (res == 1) {
-        printf("Packet captured at %ld.%06ld, length: %d\n",
-               header->ts.tv_sec, header->ts.tv_usec, header->len);
-    } else if (res == 0) {
-        printf("Timeout expired\n");
-    } else {
-        printf("Error occurred: %s\n", pcap_geterr(handle));
-    }
-
-    // Bersih-bersih
     pcap_close(handle);
-    pcap_freealldevs(alldevs);
 
+    printf("Capture finished.\n");
     return 0;
 }
