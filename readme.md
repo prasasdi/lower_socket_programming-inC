@@ -3,6 +3,12 @@ Socket programming atau entah bikin http di C itu gampang dan semudah pakai inte
 
 Repository ini gw ragu karena awalnya pengen nulis perjalanan gw untuk mencapai websocket, setelah dipikir alangkah baiknya kalau gw belajar rakit socket dengan `raw socket` dan parse `header`. Udah kayak rakit mobil, cuman mobil yang dimaksud mobil cc kecil.
 
+## Pakai npcap
+Download npcap dulu sih di windows. Buat sdk udah gw taruh di repository dan per folder contoh atau versi yang pakai npcap udah gw buatin `Makefile`nya tinggal `make run` atau `nmake`
+
+## nmake
+Gw coba pakai `make` enggak bisa karena librarynya format mi-kocok, jadi gw sarankan pakai MSVC `nmake` dengan buka `Developer Command Prompt`
+
 # Coba deh iseng begini
 Buka repository ini [wsServer ws.h header](https://github.com/Theldus/wsServer/blob/master/include/ws.h) dan coba baca, kalau elu ngerti per variabelnya maksudnya apa dan metodenya bakal ngapain. Selamat berarti elu bisa, gw sendiri enggak.
 
