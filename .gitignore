@@ -1,4 +1,5 @@
 *.exe
 *.asm
 *.o
+*.obj
 preadme.md
