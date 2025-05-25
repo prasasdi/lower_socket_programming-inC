@@ -1,3 +1,6 @@
+# tl;dr
+(update 25/05/2025) Gw masih pelajari apa yang bisa diambil dari sniffer. Yang gw baca adalah apa yang terjadi pada antarmuka internet gw dibelakang layarnya. Apa yang gw mau ambil juga belum tau, FAFO dulu aja
+
 # Insight apa yang bisa gw kasih?
 Kayaknya cara pakai npcap dulu mungkin. Kalau kalian lihat ada yang seperti ini `\Device\NPF_{id}` dan itu artinya npcap device names yang mewakili network interfaces di Windows. (Iya maap banget, gw pengen universal cuman untuk saat ini Windows dulu ya, untuk belajar network interface)
 
@@ -7,32 +10,7 @@ Output yang gw dapat adalah seperti ini:
 ```bash
 Opening interface: \Device\NPF_{951FA70D-8B7D-4A33-8442-65BC36139083}
 
-[sniff] Packet captured! Length: 208
-[heartbeat] alive at 444062750 ms
-
-[sniff] Packet captured! Length: 212
-[heartbeat] alive at 444064875 ms
-
-[sniff] Packet captured! Length: 165
-[heartbeat] alive at 444066984 ms
-
-[sniff] Packet captured! Length: 54
-[heartbeat] alive at 444069093 ms
-
-[sniff] Packet captured! Length: 198
-[heartbeat] alive at 444071203 ms
-
-[sniff] Packet captured! Length: 100
-[heartbeat] alive at 444073328 ms
-
-[sniff] Packet captured! Length: 54
-[heartbeat] alive at 444075437 ms
-
-[sniff] Packet captured! Length: 208
-[heartbeat] alive at 444077546 ms
-
-[sniff] Packet captured! Length: 212
-[heartbeat] alive at 444079656 ms
+...
 
 [sniff] Packet captured! Length: 1292
 [heartbeat] alive at 444081781 ms
@@ -84,48 +62,6 @@ Opening interface: \Device\NPF_{951FA70D-8B7D-4A33-8442-65BC36139083}
 
 [sniff] Packet captured! Length: 570
 [heartbeat] alive at 444120671 ms
-
-[sniff] Packet captured! Length: 77
-[heartbeat] alive at 444122796 ms
-
-[sniff] Packet captured! Length: 163
-[heartbeat] alive at 444124906 ms
-
-[sniff] Packet captured! Length: 67
-[heartbeat] alive at 444127015 ms
-
-[sniff] Packet captured! Length: 74
-[heartbeat] alive at 444129140 ms
-
-[sniff] Packet captured! Length: 55
-[heartbeat] alive at 444131250 ms
-
-[sniff] Packet captured! Length: 66
-[heartbeat] alive at 444133375 ms
-
-[sniff] Packet captured! Length: 245
-[heartbeat] alive at 444135468 ms
-
-[sniff] Packet captured! Length: 54
-[heartbeat] alive at 444137593 ms
-
-[sniff] Packet captured! Length: 208
-[heartbeat] alive at 444139703 ms
-
-[sniff] Packet captured! Length: 212
-[heartbeat] alive at 444141812 ms
-
-[sniff] Packet captured! Length: 208
-[heartbeat] alive at 444143937 ms
-
-[sniff] Packet captured! Length: 212
-[heartbeat] alive at 444146046 ms
-
-[sniff] Packet captured! Length: 86
-[heartbeat] alive at 444148156 ms
-
-[sniff] Packet captured! Length: 112
-[heartbeat] alive at 444151843 ms
 
 [keyboard] Quit signal received. << ini gw pencet tombol `q` untuk quit >>
 ```
