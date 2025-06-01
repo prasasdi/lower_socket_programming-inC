@@ -89,3 +89,6 @@ Bisa jadi 1292 adalah ukuran payload TCP (data) + header TCP/IP yang kita tangka
 # Cara jalanin aplikasi
 1. Buka `Developer Command Control` dan kemudian `/cd` ke direktori ini
 2. Udah begitu kemudian `nmake run` dan pilih interface mana yang mau di baca packetnya, gw sendiri pakai `\Device\NPF_{951FA70D-8B7D-4A33-8442-65BC36139083} (Intel(R) Wi-Fi 6 AX201 160MHz)`
+
+# Update 25/05/2025
+Gw dump hex dari TCP Payload yang bisa kita kulik bareng-bareng.
