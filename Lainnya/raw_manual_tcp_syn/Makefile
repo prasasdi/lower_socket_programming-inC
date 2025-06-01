@@ -1,5 +1,5 @@
-INCLUDE_DIR = ../include
-LIB_DIR = ../lib
+INCLUDE_DIR = ../../include
+LIB_DIR = ../../lib
 
 CC = cl
 CFLAGS = /nologo /I$(INCLUDE_DIR)
